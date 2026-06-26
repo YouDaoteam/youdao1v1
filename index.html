@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>领世1对1 · 提分案例库</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header class="header">
+    <h1>📊 领世1对1 · 提分案例库</h1>
+    <div class="header-stats">
+      <span id="resultCount">670 条记录</span>
+      <button id="resetBtn" class="btn-reset">↺ 重置</button>
+    </div>
+  </header>
+
+  <section class="filter-panel">
+    <div class="filter-row">
+      <div class="filter-group">
+        <label for="filterGrade">📚 年级</label>
+        <select id="filterGrade" class="filter-select"><option value="">全部年级</option></select>
+      </div>
+      <div class="filter-group">
+        <label for="filterBase">🏢 基地</label>
+        <select id="filterBase" class="filter-select"><option value="">全部基地</option></select>
+      </div>
+      <div class="filter-group">
+        <label for="filterSubject">📖 学科</label>
+        <select id="filterSubject" class="filter-select"><option value="">全部学科</option></select>
+      </div>
+      <div class="filter-group">
+        <label for="filterCategory">📝 考试类型</label>
+        <select id="filterCategory" class="filter-select"><option value="">全部类型</option></select>
+      </div>
+      <div class="filter-group">
+        <label for="filterFeedback">⭐ 好评类型</label>
+        <select id="filterFeedback" class="filter-select"><option value="">全部类型</option></select>
+      </div>
+      <div class="filter-group">
+        <label for="filterRegion">📍 地区</label>
+        <select id="filterRegion" class="filter-select"><option value="">全部地区</option></select>
+      </div>
+      <div class="filter-group">
+        <label for="filterTeacher">👩‍🏫 伴学师</label>
+        <select id="filterTeacher" class="filter-select"><option value="">全部伴学师</option></select>
+      </div>
+    </div>
+    <div class="active-filters" id="activeFilters"></div>
+    <div class="quick-stats" id="quickStats"></div>
+  </section>
+
+  <section class="search-bar">
+    <input type="text" id="searchInput" placeholder="🔍 搜索学生姓名、伴学师、文案关键词..." class="search-input">
+    <span class="search-count" id="searchCount"></span>
+  </section>
+
+  <section class="card-grid" id="cardGrid">
+    <div class="loading">加载中...</div>
+  </section>
+
+  <div class="modal-overlay" id="modalOverlay">
+    <div class="modal-content">
+      <button class="modal-close" id="modalClose">&times;</button>
+      <img id="modalImage" src="" alt="预览图片">
+      <div class="modal-info" id="modalInfo"></div>
+    </div>
+  </div>
+
+  <footer class="footer">
+    <p>领世1对1 · 提分案例库 · Powered by GitHub Pages</p>
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+</html>

@@ -1,0 +1,15 @@
+# Dependencies
+node_modules/
+
+# Temp
+%SystemDrive%/
+datasource.xlsx
+source_data.xlsx
+*.py
+data_preview.json
+datasource_preview.json
+
+# System
+.DS_Store
+Thumbs.db
+desktop.ini
