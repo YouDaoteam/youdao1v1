@@ -1,10 +1,12 @@
 /**
- * 领世1对1 · 提分案例库 - 筛选逻辑
+ * 领世1对1 · 提分案例库 - 筛选逻辑 v2
+ * 新字段：年级、学科、地区、伴学师、类型、提分幅度、总分选段
  */
 
 let allRecords = [];
 let currentFilters = {
-  grade: '', base: '', subject: '', category: '', feedback_type: '', region: '', teacher: ''
+  grade: '', subject: '', region: '', type: '',
+  score_range: '', total_score: '', teacher: ''
 };
 let searchQuery = '';
 
@@ -22,17 +24,17 @@ const resetBtn = document.getElementById('resetBtn');
 
 const filterSelects = {
   grade: document.getElementById('filterGrade'),
-  base: document.getElementById('filterBase'),
   subject: document.getElementById('filterSubject'),
-  category: document.getElementById('filterCategory'),
-  feedback_type: document.getElementById('filterFeedback'),
   region: document.getElementById('filterRegion'),
+  type: document.getElementById('filterType'),
+  score_range: document.getElementById('filterScoreRange'),
+  total_score: document.getElementById('filterTotalScore'),
   teacher: document.getElementById('filterTeacher')
 };
 
 const filterLabels = {
-  grade: '年级', base: '基地', subject: '学科',
-  category: '考试类型', feedback_type: '好评类型', region: '地区', teacher: '伴学师'
+  grade: '年级', subject: '学科', region: '地区',
+  type: '类型', score_range: '提分幅度', total_score: '总分选段', teacher: '伴学师'
 };
 
 // ==================== Init ====================
@@ -56,7 +58,6 @@ function populateFilters() {
     const select = filterSelects[field];
     const group = select.closest('.filter-group');
 
-    // 无有效值时隐藏该筛选器
     if (values.length === 0) {
       if (group) group.style.display = 'none';
       continue;
@@ -83,9 +84,9 @@ function getFilteredRecords() {
     if (searchQuery) {
       const q = searchQuery.toLowerCase();
       const searchable = [
-        record.student, record.teacher, record.grade, record.subject,
-        record.base, record.region, record.category, record.feedback_type,
-        record.description, record.copywriting
+        record.region, record.teacher, record.grade, record.subject,
+        record.type, record.score_range, record.total_score,
+        record.description
       ].filter(Boolean).join(' ').toLowerCase();
       if (!searchable.includes(q)) return false;
     }
@@ -109,20 +110,24 @@ function buildCard(record) {
   const tags = [];
   if (record.grade) tags.push(`<span class="card-tag tag-grade">${record.grade}</span>`);
   if (record.subject) tags.push(`<span class="card-tag tag-subject">${record.subject}</span>`);
-  if (record.region) tags.push(`<span class="card-tag tag-region">${record.region}</span>`);
-  if (record.category) tags.push(`<span class="card-tag tag-category">${record.category}</span>`);
-  if (record.feedback_type) tags.push(`<span class="card-tag tag-feedback">${record.feedback_type}</span>`);
+  if (record.type) tags.push(`<span class="card-tag tag-type">${record.type}</span>`);
+
+  // 高亮行：地区 + 提分幅度 + 总分
+  const highlights = [];
+  if (record.region) highlights.push(`<span class="hl-item hl-region">📍 ${record.region}</span>`);
+  if (record.score_range) highlights.push(`<span class="hl-item hl-score">📈 ${record.score_range}</span>`);
+  if (record.total_score) highlights.push(`<span class="hl-item hl-total">🏆 ${record.total_score}</span>`);
 
   return `
     <div class="card" onclick="openModal(${allRecords.indexOf(record)})">
-      <img class="card-image" src="${record.image}" alt="${record.student}" loading="lazy"
+      <img class="card-image" src="${record.image}" alt="提分明细" loading="lazy"
            onerror="this.style.display='none';this.nextElementSibling.style.display='flex';">
       <div class="card-image-placeholder" style="display:none;">📷</div>
       <div class="card-body">
-        <div class="card-student">${record.student}</div>
         <div class="card-meta">${tags.join('')}</div>
-        <div class="card-teacher">${record.teacher} · ${record.base}</div>
-        <div class="card-desc">${(record.description||'').substring(0,60)}</div>
+        ${highlights.length > 0 ? `<div class="card-highlights">${highlights.join('')}</div>` : ''}
+        <div class="card-desc">${(record.description || '').substring(0, 80)}</div>
+        <div class="card-teacher">${record.teacher || ''}</div>
       </div>
     </div>
   `;
@@ -136,8 +141,8 @@ function updateStats() {
     : `${filtered.length} / ${total} 条`;
 
   if (filtered.length > 0 && filtered.length < total) {
-    const grades = [...new Set(filtered.map(r => r.grade))].sort();
-    quickStats.textContent = `当前: ${grades.join('、')}`;
+    const regions = [...new Set(filtered.map(r => r.region).filter(Boolean))].sort();
+    quickStats.textContent = `当前: ${regions.slice(0, 5).join('、')}${regions.length > 5 ? '…' : ''}`;
   } else {
     quickStats.textContent = '';
   }
@@ -197,20 +202,21 @@ function openModal(index) {
 
   modalImage.src = record.image;
   modalInfo.innerHTML = `
-    <h3>${record.student} <small style="font-weight:400;color:#64748b;">${record.grade} · ${record.subject}</small></h3>
-    <div class="meta-row" style="margin-bottom:8px;">
-      <span class="card-tag tag-grade">${record.grade||''}</span>
-      <span class="card-tag tag-subject">${record.subject||''}</span>
-      <span class="card-tag tag-category">${record.category||''}</span>
-      <span class="card-tag tag-feedback">${record.feedback_type||''}</span>
+    <h3>📋 提分案例详情</h3>
+    <div class="meta-row" style="margin-bottom:10px;">
+      <span class="card-tag tag-grade">${record.grade || ''}</span>
+      <span class="card-tag tag-subject">${record.subject || ''}</span>
+      <span class="card-tag tag-type">${record.type || ''}</span>
     </div>
-    <div class="meta-row" style="margin-bottom:8px;">
-      <span class="card-tag tag-teacher">👩‍🏫 ${record.teacher||''}</span>
-      <span class="card-tag tag-base">🏢 ${record.base||''}</span>
+    <div class="meta-row" style="margin-bottom:10px;">
       ${record.region ? `<span class="card-tag tag-region">📍 ${record.region}</span>` : ''}
+      ${record.score_range ? `<span class="card-tag tag-score-range">📈 ${record.score_range}</span>` : ''}
+      ${record.total_score ? `<span class="card-tag tag-total-score">🏆 ${record.total_score}</span>` : ''}
     </div>
-    ${record.description ? `<p style="margin-top:8px;font-size:0.9rem;color:#475569;">💬 ${record.description}</p>` : ''}
-    ${record.copywriting ? `<div style="margin-top:8px;padding:10px;background:#f8fafc;border-radius:8px;font-size:0.85rem;color:#334155;white-space:pre-wrap;line-height:1.5;">${record.copywriting}</div>` : ''}
+    <div class="meta-row" style="margin-bottom:10px;">
+      <span class="card-tag tag-teacher">👩‍🏫 ${record.teacher || ''}</span>
+    </div>
+    ${record.description ? `<p style="margin-top:10px;font-size:0.9rem;color:#475569;line-height:1.6;">💬 ${record.description}</p>` : ''}
   `;
 
   modalOverlay.classList.add('active');

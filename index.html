@@ -10,7 +10,7 @@
   <header class="header">
     <h1>📊 领世1对1 · 提分案例库</h1>
     <div class="header-stats">
-      <span id="resultCount">670 条记录</span>
+      <span id="resultCount">45 条记录</span>
       <button id="resetBtn" class="btn-reset">↺ 重置</button>
     </div>
   </header>
@@ -22,24 +22,24 @@
         <select id="filterGrade" class="filter-select"><option value="">全部年级</option></select>
       </div>
       <div class="filter-group">
-        <label for="filterBase">🏢 基地</label>
-        <select id="filterBase" class="filter-select"><option value="">全部基地</option></select>
-      </div>
-      <div class="filter-group">
         <label for="filterSubject">📖 学科</label>
         <select id="filterSubject" class="filter-select"><option value="">全部学科</option></select>
       </div>
       <div class="filter-group">
-        <label for="filterCategory">📝 考试类型</label>
-        <select id="filterCategory" class="filter-select"><option value="">全部类型</option></select>
-      </div>
-      <div class="filter-group">
-        <label for="filterFeedback">⭐ 好评类型</label>
-        <select id="filterFeedback" class="filter-select"><option value="">全部类型</option></select>
-      </div>
-      <div class="filter-group">
         <label for="filterRegion">📍 地区</label>
         <select id="filterRegion" class="filter-select"><option value="">全部地区</option></select>
+      </div>
+      <div class="filter-group">
+        <label for="filterType">🏷️ 类型</label>
+        <select id="filterType" class="filter-select"><option value="">全部类型</option></select>
+      </div>
+      <div class="filter-group">
+        <label for="filterScoreRange">📈 提分幅度</label>
+        <select id="filterScoreRange" class="filter-select"><option value="">全部幅度</option></select>
+      </div>
+      <div class="filter-group">
+        <label for="filterTotalScore">🏆 总分选段</label>
+        <select id="filterTotalScore" class="filter-select"><option value="">全部分段</option></select>
       </div>
       <div class="filter-group">
         <label for="filterTeacher">👩‍🏫 伴学师</label>
@@ -51,7 +51,7 @@
   </section>
 
   <section class="search-bar">
-    <input type="text" id="searchInput" placeholder="🔍 搜索学生姓名、伴学师、文案关键词..." class="search-input">
+    <input type="text" id="searchInput" placeholder="🔍 搜索地区、学科、伴学师、关键词..." class="search-input">
     <span class="search-count" id="searchCount"></span>
   </section>
 

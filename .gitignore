@@ -9,6 +9,10 @@ source_data.xlsx
 data_preview.json
 datasource_preview.json
 
+# Backup
+data_old.json
+xlsx_extracted/
+
 # System
 .DS_Store
 Thumbs.db

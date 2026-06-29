@@ -417,3 +417,42 @@ body {
     padding: 8px 16px;
   }
 }
+
+/* ========================================
+   提分案例库 v2 - 新字段样式追加
+   ======================================== */
+
+/* 类型标签 */
+.tag-type { background: #fce7f3; color: #be185d; }
+
+/* 提分幅度标签 */
+.tag-score-range { background: linear-gradient(135deg, #d1fae5, #a7f3d0); color: #065f46; font-weight: 600; }
+
+/* 总分选段标签 */
+.tag-total-score { background: linear-gradient(135deg, #fef3c7, #fde68a); color: #92400e; font-weight: 600; }
+
+/* 卡片高亮信息条 */
+.card-highlights {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-bottom: 8px;
+  padding: 8px 10px;
+  background: #f8fafc;
+  border-radius: 8px;
+  border-left: 3px solid var(--primary);
+}
+
+.hl-item {
+  font-size: 0.82rem;
+  font-weight: 600;
+  padding: 3px 8px;
+  border-radius: 4px;
+}
+
+.hl-region { background: #e0f2fe; color: #0369a1; }
+.hl-score  { background: #d1fae5; color: #065f46; }
+.hl-total  { background: #fef3c7; color: #92400e; }
+
+/* 卡片学生名区改为隐藏（新数据无学生名） */
+.card-student { display: none; }
